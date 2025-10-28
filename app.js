@@ -1,0 +1,86 @@
+// Web App URL fija (Apps Script)
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzR-6UuwxxCVf60pUboy6aOci_tAdq_q5eK6xvwn1xe5ZO6VlRU42ZL7CtDLuqMIsXIcw/exec";
+
+const $ = sel => document.querySelector(sel);
+
+function getFormData(){
+  const data = {
+    empresa: $('#empresa').value.trim(),
+    cliente: $('#cliente').value.trim(),
+    cargo: $('#cargo').value.trim(),
+    motivo: $('#motivo').value.trim(),
+    fecha: $('#fecha').value,
+    asistentes: $('#asistentes').value.trim(),
+    tema1: $('#tema1').value.trim(),
+    tema2: $('#tema2').value.trim(),
+    tema3: $('#tema3').value.trim(),
+    comp1: $('#comp1').value.trim(),
+    comp1_fecha: $('#comp1_fecha').value,
+    comp1_owner: $('#comp1_owner').value.trim(),
+    comp2: $('#comp2').value.trim(),
+    comp2_fecha: $('#comp2_fecha').value,
+    comp2_owner: $('#comp2_owner').value.trim(),
+    comp3: $('#comp3').value.trim(),
+    comp3_fecha: $('#comp3_fecha').value,
+    comp3_owner: $('#comp3_owner').value.trim()
+  };
+  return data;
+}
+
+function validate(data){
+  if(!data.empresa) return 'Ingresa el nombre de la empresa.';
+  if(!data.cliente) return 'Ingresa el nombre del cliente.';
+  if(!data.fecha) return 'Selecciona la fecha de la reunión.';
+  return null;
+}
+
+async function saveMeeting(){
+  const data = getFormData();
+  const err = validate(data);
+  if (err) return setStatus(err, true);
+
+  setStatus('Guardando...');
+
+  try {
+    // URLSearchParams => Content-Type: application/x-www-form-urlencoded (simple request)
+    const body = new URLSearchParams(data).toString();
+
+    const res = await fetch(WEBAPP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body
+    });
+
+    const text = await res.text();
+    let json = {};
+    try { json = JSON.parse(text); } catch (_) {}
+
+    if (!res.ok || json?.ok !== true) {
+      throw new Error(json?.message || text || 'Error desconocido del servidor.');
+    }
+
+    setStatus('✅ Reunión guardada en Google Sheets.');
+    clearForm();
+  } catch (e) {
+    setStatus('❌ No se pudo guardar: ' + e.message, true);
+  }
+}
+
+function setStatus(msg, isError=false){
+  const el = $('#status');
+  el.textContent = msg;
+  el.style.color = isError ? 'var(--danger)' : 'var(--muted)';
+}
+
+function clearForm(){
+  ['empresa','cliente','cargo','motivo','fecha','asistentes',
+   'tema1','tema2','tema3','comp1','comp1_fecha','comp1_owner',
+   'comp2','comp2_fecha','comp2_owner','comp3','comp3_fecha','comp3_owner'
+  ].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+}
+
+function init(){
+  document.getElementById('btnGuardar').addEventListener('click', saveMeeting);
+}
+
+document.addEventListener('DOMContentLoaded', init);

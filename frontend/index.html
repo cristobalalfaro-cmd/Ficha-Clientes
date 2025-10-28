@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro de Reuniones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Registro de Reuniones</h1>
+      <p class="sub">Panel para ingresar y guardar conversaciones con clientes</p>
+    </header>
+
+    <section class="card">
+      <h2>1) Información general</h2>
+      <div class="grid">
+        <label>
+          <span>Nombre Empresa</span>
+          <input id="empresa" type="text" placeholder="Ej: Cibernos Chile" required />
+        </label>
+
+        <label>
+          <span>Nombre Cliente</span>
+          <input id="cliente" type="text" placeholder="Ej: María Pérez" required />
+        </label>
+
+        <label>
+          <span>Cargo Cliente</span>
+          <input id="cargo" type="text" placeholder="Ej: Gerente de RRHH" />
+        </label>
+
+        <label>
+          <span>Motivo de la reunión</span>
+          <input id="motivo" type="text" placeholder="Ej: Revisión de propuesta" />
+        </label>
+
+        <label>
+          <span>Fecha de la reunión</span>
+          <input id="fecha" type="date" required />
+        </label>
+
+        <label class="full">
+          <span>Asistentes del equipo (separar por comas)</span>
+          <input id="asistentes" type="text" placeholder="Ej: Cristóbal Alfaro, Ana Soto" />
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Temas de la reunión</h2>
+      <div class="topics">
+        <label class="full">
+          <span>Tema 1 (notas libres)</span>
+          <textarea id="tema1" rows="3" placeholder="Notas del tema 1"></textarea>
+        </label>
+        <label class="full">
+          <span>Tema 2 (notas libres)</span>
+          <textarea id="tema2" rows="3" placeholder="Notas del tema 2"></textarea>
+        </label>
+        <label class="full">
+          <span>Tema 3 (notas libres)</span>
+          <textarea id="tema3" rows="3" placeholder="Notas del tema 3"></textarea>
+        </label>
+      </div>
+
+      <h3>Compromisos</h3>
+      <div class="commitments">
+        <div class="commit">
+          <label class="full"><span>Compromiso 1</span>
+            <input id="comp1" type="text" placeholder="Ej: Enviar propuesta final" />
+          </label>
+          <label><span>Fecha</span><input id="comp1_fecha" type="date" /></label>
+          <label><span>Owner</span><input id="comp1_owner" type="text" placeholder="Ej: Cristóbal" /></label>
+        </div>
+        <div class="commit">
+          <label class="full"><span>Compromiso 2</span>
+            <input id="comp2" type="text" placeholder="Ej: Agendar demo con TI" />
+          </label>
+          <label><span>Fecha</span><input id="comp2_fecha" type="date" /></label>
+          <label><span>Owner</span><input id="comp2_owner" type="text" placeholder="Ej: Ana" /></label>
+        </div>
+        <div class="commit">
+          <label class="full"><span>Compromiso 3</span>
+            <input id="comp3" type="text" placeholder="Ej: Compartir referencias" />
+          </label>
+          <label><span>Fecha</span><input id="comp3_fecha" type="date" /></label>
+          <label><span>Owner</span><input id="comp3_owner" type="text" placeholder="Ej: Cliente" /></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card actions">
+      <button id="btnGuardar" class="primary">Guardar reunión</button>
+      <div id="status" class="status" aria-live="polite"></div>
+      <small class="hint">Backend: Google Apps Script en <code>https://script.google.com/macros/s/AKfycbxPV4abZns_ydXmspPEGOA02-Na0woNUqA296qAqK7tuc0lC3f6rNI2uUvPS7hy8TWUZg/exec</code></small>
+    </section>
+
+    <footer>
+      <small>Hecho con ♥ · Montserrat · Funciona con Google Apps Script + Google Sheets</small>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

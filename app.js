@@ -10,6 +10,7 @@ function getFormData(){
     cargo: $('#cargo').value.trim(),
     motivo: $('#motivo').value.trim(),
     fecha: $('#fecha').value,
+    tipoReunion: document.getElementById("tipoReunion").value,
     asistentes: $('#asistentes').value.trim(),
     tema1: $('#tema1').value.trim(),
     tema2: $('#tema2').value.trim(),
